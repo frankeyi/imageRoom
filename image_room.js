@@ -14,14 +14,16 @@
 
 
 (function($){
-
+	var loading_gif = 'http://s-static.oss-cn-qingdao.aliyuncs.com/loading.gif';
+	
+	
 	var layer = $('<div style="position:fixed;z-index:102;left:0;top:0;right:0;bottom:0;background:#1a1a1a;overflow:hidden;"></div>');
 	var container = $('<ul style="position:absolute;height:100%;"></ul>');
 	var btn_container = $('<div style="position:absolute; bottom:10px; width:100%; height:20px; text-align:center;"></div>');
 	
 	//html定义
 	var item_html = '<li style="float:left;height:100%;position:relative; overflow:hidden;"></li>';
-	var loading_html = '<div class="room_img_loading" style="position:absolute;top:0;left:0;right:0;bottom:0;background-image:url(http://s-static.oss-cn-qingdao.aliyuncs.com/loading.gif);background-repeat:no-repeat;background-position:center;">';
+	var loading_html = '<div class="room_img_loading" style="position:absolute;top:0;left:0;right:0;bottom:0;background-image:url('+loading_gif+');background-repeat:no-repeat;background-position:center;">';
 	var btn_html = '<div style="width:10px;height:10px;background:#ccc;display:inline-block; margin:0 2px;"></div>';
 	
 	var init_container = false;
