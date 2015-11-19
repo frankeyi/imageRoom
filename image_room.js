@@ -1,3 +1,18 @@
+/**
+ * WEB图片查看
+ * author：joson
+ * 
+ * 使用方法：
+ * 选中所要被分到一组的图片，用room()方法即可，图片需要加上data-room-src属性指定大图路径，如:
+ * <div id="test"><img src="xx" data-room-src="xxx" /></div>
+ * $('img').room();
+ * 或 $('#test').find('img').room();
+ * 不是图片的对象也行，只要指定data-room-src属性，如：
+ * <div data-room-src="xx"></div>
+ * $('div').room();
+ */
+
+
 (function($){
 
 	var layer = $('<div style="position:fixed;z-index:102;left:0;top:0;right:0;bottom:0;background:#1a1a1a;overflow:hidden;"></div>');
@@ -163,7 +178,7 @@
 							
 							
 							//判断方向
-							if( prevY != y && angle > 30){
+							if( prevY != y && angle > 10){
 								
 								arrow = 'updown';
 								
@@ -278,8 +293,10 @@
 					touchend : function(e){
 						
 						if( gesture == '' ){
+							
 							if( new Date().getTime() - taptime < 250 ){
-								container.trigger('click');
+								//container.trigger('click');
+								close();
 								return ;
 							}
 						}
@@ -319,12 +336,18 @@
 								right();
 							}
 						}
-						
-					},
-					click : function(){
-						close();
+						e.preventDefault();
 					}
+					
 				});
+				
+				if(!$.is_touch()){
+					container.bind({
+						click : function(){
+							close();
+						}
+					})
+				}
 				
 			};
 			
@@ -428,17 +451,6 @@
 			var close = function(){
 				layer.remove();
 			};
-			
-			
-//			img.bind({
-//				'room.show' : function(){
-//					
-//				},
-//				
-//				'room.hide' : function(){
-//					
-//				}
-//			});
 			
 			img.each(function(i){
 				
