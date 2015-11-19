@@ -63,7 +63,7 @@
 			var current = 0;
 			var items;
 			var currentX = 0, currentImg, prevImg, currentImgX = 0, currentImgY = 0;
-			var startX,endX,startY,endY,prevX,prevY,flag=false;
+			var startX,endX,startY,endY,prevX,prevY,flag=false,mouse_status = false;
 			var ci_w,ci_h;
 			var gesture = '';
 			var taptime;
@@ -129,6 +129,38 @@
 							right();
 						}
 						e.preventDefault();
+					},
+					
+					mousedown : function(e){
+						mouse_status = true;
+						taptime = new Date().getTime();
+						endX = 0;
+						startX = event.pageX;
+					},
+					
+					mousemove : function(e){
+						if( !mouse_status )
+							return ;
+						var x = event.pageX;
+						endX = x - startX;
+						container.css({'left':currentX+ endX});
+					},
+					
+					mouseup : function(e){
+						mouse_status = false;
+						console.log(endX);
+						if( (endX > -5 && endX < 5)  && new Date().getTime() - taptime < 300 ){
+							close();
+							return ;
+						}
+						var w = screen_width * 0.15;
+						if( endX > -w && endX < w ){
+							to();
+						}else if( endX > 0 ){
+							left();
+						}else if( endX < 0 ){
+							right();
+						}
 					},
 					
 					touchstart : function(e){
@@ -254,10 +286,6 @@
 							var w = cw + cw * b >= srcw ? srcw : cw + cw * b, h = ch + ch * b >= srch ? srch : ch + ch * b;
 							var cx = (event.touches[1].pageX - event.touches[0].pageX) / 2 + event.touches[0].pageX ,cy = (event.touches[1].pageY - event.touches[0].pageY) / 2 + event.touches[0].pageY - $(window).scrollTop();
 							
-//							center_pos.css({
-//								left : cx - 5,
-//								top : cy - 5
-//							});
 							
 							var pos = translateScreenPosToImagePos( cx, cy );
 							pos.x = pos.x>0?pos.x:0;
@@ -297,7 +325,6 @@
 						if( gesture == '' ){
 							
 							if( new Date().getTime() - taptime < 250 ){
-								//container.trigger('click');
 								close();
 								return ;
 							}
@@ -343,13 +370,13 @@
 					
 				});
 				
-				if(!$.is_touch()){
-					container.bind({
-						click : function(){
-							close();
-						}
-					})
-				}
+//				if(!$.is_touch()){
+//					container.bind({
+//						click : function(){
+//							close();
+//						}
+//					})
+//				}
 				
 			};
 			
