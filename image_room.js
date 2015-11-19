@@ -2,9 +2,6 @@
  * WEB图片查看
  * author：joson
  * 
- * 前提：
- * 你需要jquery.js，如想支持鼠标滑轮，你还需要jquery.mousewheel.js
- * 
  * 使用方法：
  * 选中所要被分到一组的图片，用room()方法即可，图片需要加上data-room-src属性指定大图路径，如:
  * <div id="test"><img src="xx" data-room-src="xxx" /></div>
@@ -135,6 +132,7 @@
 					},
 					
 					mousedown : function(e){
+						var event = e?e:event;
 						mouse_status = true;
 						taptime = new Date().getTime();
 						endX = 0;
@@ -144,6 +142,7 @@
 					mousemove : function(e){
 						if( !mouse_status )
 							return ;
+						var event = e?e:event;
 						var x = event.pageX;
 						endX = x - startX;
 						container.css({'left':currentX+ endX});
@@ -151,7 +150,6 @@
 					
 					mouseup : function(e){
 						mouse_status = false;
-						console.log(endX);
 						if( (endX > -5 && endX < 5)  && new Date().getTime() - taptime < 300 ){
 							close();
 							return ;
@@ -167,7 +165,7 @@
 					},
 					
 					touchstart : function(e){
-						
+						var event = e?e:event;
 						currentImg = items[current].find('img');
 						taptime = new Date().getTime();
 						moveimg_x = 0;
@@ -194,7 +192,7 @@
 					},
 					
 					touchmove : function(e){
-						
+						var event = e?e:event;
 						if( gesture == '' ){
 							if(event.touches.length == 1){
 								endX = event.touches[0].pageX - startX;
