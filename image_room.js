@@ -2,6 +2,9 @@
  * WEB图片查看
  * author：joson
  * 
+ * 前提：
+ * 你需要jquery.js，如想支持鼠标滑轮，你还需要jquery.mousewheel.js
+ * 
  * 使用方法：
  * 选中所要被分到一组的图片，用room()方法即可，图片需要加上data-room-src属性指定大图路径，如:
  * <div id="test"><img src="xx" data-room-src="xxx" /></div>
